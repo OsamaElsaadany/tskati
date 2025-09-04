@@ -4,6 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:tskaty/core/constants/app_colors.dart';
 import 'package:tskaty/core/constants/app_images.dart';
 import 'package:tskaty/core/functions/navigation.dart';
+import 'package:tskaty/features/add_task/pages/add_task.dart';
 import 'package:tskaty/features/upload/upload.dart';
 
 class Splash extends StatefulWidget {
@@ -18,7 +19,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 5), () {
-      pushandrm(context, Upload());
+      pushandrm(context, AddTask());
     });
   }
 

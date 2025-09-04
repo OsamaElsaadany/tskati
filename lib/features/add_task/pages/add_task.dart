@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:tskaty/core/constants/app_colors.dart';
-import 'package:date_field/date_field.dart';
 import 'package:intl/intl.dart';
 import 'package:tskaty/core/widgets/btn.dart';
-import 'package:tskaty/features/add_task/widgets/timeedit.dart';
+import 'package:tskaty/features/add_task/widgets/datepick.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({super.key});
@@ -14,13 +13,30 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
+  var titlecontroller = TextEditingController();
+  var desccontroller = TextEditingController();
+  var datecontorller = TextEditingController(
+    text: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+  );
+  var ftcontroller = TextEditingController(
+    text: DateFormat('hh:mm a').format(DateTime.now()),
+  );
+  var ltcontroller = TextEditingController(
+    text: DateFormat('hh:mm a').format(DateTime.now()),
+  );
+  List<Color> colorl = [
+    AppColors.bluecolor,
+    AppColors.oracolor,
+    AppColors.redcolor,
+  ];
+  int currentindex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {},
-          icon: Icon(Icons.arrow_back_rounded),
+          icon: Icon(Icons.arrow_back_rounded, color: AppColors.bluecolor),
         ),
         title: Text(
           'Add Task',
@@ -32,7 +48,7 @@ class _AddTaskState extends State<AddTask> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(18.0),
+        padding: const EdgeInsets.fromLTRB(18, 3, 18, 0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,6 +63,7 @@ class _AddTaskState extends State<AddTask> {
               ),
               Gap(7),
               TextFormField(
+                controller: titlecontroller,
                 decoration: InputDecoration(
                   hint: Text(
                     'Enter title',
@@ -54,7 +71,7 @@ class _AddTaskState extends State<AddTask> {
                   ),
                 ),
               ),
-              Gap(15),
+              Gap(10),
               Text(
                 'Describtion',
                 style: TextStyle(
@@ -65,6 +82,7 @@ class _AddTaskState extends State<AddTask> {
               ),
               Gap(7),
               TextFormField(
+                controller: desccontroller,
                 maxLines: 4,
                 decoration: InputDecoration(
                   hint: Text(
@@ -73,36 +91,21 @@ class _AddTaskState extends State<AddTask> {
                   ),
                 ),
               ),
-              Gap(15),
-              Text(
-                'Date',
-                style: TextStyle(
-                  color: AppColors.darkcolor,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Gap(7),
-              DateTimeFormField(
-                mode: DateTimeFieldPickerMode.date,
-          
-                initialValue: DateTime.now(),
-                firstDate: DateTime.now(),
-                lastDate: DateTime.now().add(const Duration(days: 300)),
-          
-                dateFormat: DateFormat('dd-MM-yyyy'),
-                onChanged: (DateTime? value) {},
-              ),
-              Gap(15),
+              Gap(10),
+              datepick(datecontorller: datecontorller),
+
+              Gap(10),
               Row(
                 children: [
-                  timeedit(title: 'Start Time'),
-                  Gap(13),
-                  timeedit(title: 'End Time'),
+                  Expanded(
+                    child: timeedit(context, 'Start Time', ftcontroller),
+                  ),
+                  Gap(10),
+                  Expanded(child: timeedit(context, 'End Time', ltcontroller)),
                 ],
               ),
-              Gap(15),
-          
+              Gap(10),
+
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -116,31 +119,76 @@ class _AddTaskState extends State<AddTask> {
                   ),
                   Gap(7),
                   Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundColor: AppColors.bluecolor,
-                      ),
-                      Gap(10),
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundColor: AppColors.oracolor,
-                      ),
-                      Gap(10),
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundColor: AppColors.redcolor,
-                      ),
-                    ],
+                    spacing: 7,
+                    children: List.generate(3, (index) {
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            currentindex = index;
+                          });
+                        },
+                        child: CircleAvatar(
+                          backgroundColor: colorl[index],
+                          child: currentindex == index
+                              ? Icon(
+                                  Icons.check_outlined,
+                                  color: AppColors.whitecolor,
+                                )
+                              : null,
+                        ),
+                      );
+                    }),
                   ),
-              Gap(17),
-                  btn(h: 57, title: 'Create task', ontap: (){})
+                  Gap(11),
+                  btn(h: 55, title: 'Create task', ontap: () {}),
                 ],
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Column timeedit(
+    BuildContext context,
+    String title,
+    TextEditingController controller,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+            color: AppColors.darkcolor,
+            fontSize: 17,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        Gap(7),
+        TextFormField(
+          controller: controller,
+          readOnly: true,
+          decoration: InputDecoration(
+            suffixIcon: IconButton(
+              onPressed: () async {
+                var selected = await showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay.now(),
+                );
+                if (selected != null) {
+                  controller.text = selected.format(context);
+                }
+              },
+              icon: Icon(
+                Icons.watch_later_outlined,
+                color: AppColors.bluecolor,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

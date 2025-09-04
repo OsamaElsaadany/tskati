@@ -12,7 +12,6 @@ dependencies:
   gap: ^3.0.1
   lottie: ^3.3.1
   image_picker: ^1.2.0
-  date_field: ^6.0.3+1
   intl: ^0.18.0
 
 dev_dependencies:
