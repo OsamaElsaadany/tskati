@@ -108,11 +108,9 @@ class _UploadState extends State<Upload> {
     );
   }
 
-  
-
   Future<void> upload({required bool Iiscamera}) async {
     XFile? file = await ImagePicker().pickImage(
-      source: Iiscamera ? ImageSource.camera: ImageSource.gallery,
+      source: Iiscamera ? ImageSource.camera : ImageSource.gallery,
     );
     if (file != null) {
       setState(() {
