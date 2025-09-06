@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:tskaty/core/constants/app_colors.dart';
 import 'package:tskaty/core/constants/app_fonts.dart';
+import 'package:tskaty/core/services/localhelper.dart';
 import 'package:tskaty/features/splash/splash.dart';
 
-void main() {
+Future<void> main() async {
+  await Hive.initFlutter();
+  await Localhelper.init();
   runApp(const MainApp());
 }
 
@@ -12,33 +16,28 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme:  ThemeData(
+      theme: ThemeData(
         scaffoldBackgroundColor: AppColors.whitecolor,
         appBarTheme: AppBarTheme(
           backgroundColor: AppColors.whitecolor,
           centerTitle: true,
-          surfaceTintColor: Colors.transparent
+          surfaceTintColor: Colors.transparent,
         ),
         fontFamily: AppFonts.poppinsfamily,
         inputDecorationTheme: InputDecorationTheme(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: AppColors.graycolor,
-            )
+            borderSide: BorderSide(color: AppColors.graycolor),
           ),
-          focusedBorder:  OutlineInputBorder(
+          focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: AppColors.bluecolor,
-            )
+            borderSide: BorderSide(color: AppColors.bluecolor),
           ),
-        )
-        
+        ),
       ),
-      home: Splash()
+      home: Splash(),
     );
   }
 }

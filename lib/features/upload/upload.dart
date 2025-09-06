@@ -7,8 +7,9 @@ import 'package:tskaty/core/constants/app_colors.dart';
 import 'package:tskaty/core/constants/app_images.dart';
 import 'package:tskaty/core/functions/navigation.dart';
 import 'package:tskaty/core/functions/snackbar.dart';
+import 'package:tskaty/core/services/localhelper.dart';
 import 'package:tskaty/core/widgets/btn.dart';
-import 'package:tskaty/features/add_task/pages/add_task.dart';
+import 'package:tskaty/features/home/pages/homescreen.dart';
 
 class Upload extends StatefulWidget {
   const Upload({super.key});
@@ -28,7 +29,8 @@ class _UploadState extends State<Upload> {
           TextButton(
             onPressed: () {
               if (path.isNotEmpty && name.text.isNotEmpty) {
-                pushandrm(context, AddTask());
+                Localhelper.putuserdate(path, name.text);
+                pushandrm(context, Homescreen());
               } else if (path.isEmpty && name.text.isNotEmpty) {
                 messegeusr(context, 'Please , upload an image');
               } else if (path.isNotEmpty && name.text.isEmpty) {

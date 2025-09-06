@@ -4,10 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:tskaty/core/constants/app_colors.dart';
 
 class datepick extends StatelessWidget {
-  const datepick({
-    super.key,
-    required this.datecontorller,
-  });
+  const datepick({super.key, required this.datecontorller});
 
   final TextEditingController datecontorller;
 
@@ -37,8 +34,10 @@ class datepick extends StatelessWidget {
                   firstDate: DateTime.now(),
                   lastDate: DateTime(2026),
                 );
-                if(selected != null){
-                datecontorller.text = DateFormat('yyyy-MM-dd').format(selected);
+                if (selected != null) {
+                  datecontorller.text = DateFormat(
+                    'yyyy-MM-dd',
+                  ).format(selected);
                 }
               },
               icon: Icon(
