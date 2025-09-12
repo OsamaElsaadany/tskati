@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:tskaty/core/constants/app_colors.dart';
 import 'package:intl/intl.dart';
+import 'package:tskaty/core/functions/navigation.dart';
 import 'package:tskaty/core/widgets/btn.dart';
 import 'package:tskaty/features/add_task/widgets/datepick.dart';
+import 'package:tskaty/features/home/pages/homescreen.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({super.key});
@@ -35,7 +37,9 @@ class _AddTaskState extends State<AddTask> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            pop(context, Homescreen());
+          },
           icon: Icon(Icons.arrow_back_rounded, color: AppColors.bluecolor),
         ),
         title: Text(
