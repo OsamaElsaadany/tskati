@@ -10,6 +10,7 @@ import 'package:tskaty/core/functions/navigation.dart';
 import 'package:tskaty/core/services/localhelper.dart';
 import 'package:tskaty/core/widgets/btn.dart';
 import 'package:tskaty/features/add_task/pages/add_task.dart';
+import 'package:tskaty/features/editprofile/pages/edit.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -49,14 +50,26 @@ class _HomescreenState extends State<Homescreen> {
                       ),
                     ],
                   ),
-                  CircleAvatar(
-                    radius: 35,
-                    backgroundImage:
-                        Localhelper.getdata(Localhelper.KImage) != null
-                        ? FileImage(
-                            File(Localhelper.getdata(Localhelper.KImage)),
-                          )
-                        : AssetImage(AppImages.emusr),
+                  GestureDetector(
+                    onTap: () async {
+                      final updated = await Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Edit()),
+                      );
+
+                      if (updated == true) {
+                        setState(() {});
+                      }
+                    },
+                    child: CircleAvatar(
+                      radius: 35,
+                      backgroundImage:
+                          Localhelper.getdata(Localhelper.KImage) != null
+                          ? FileImage(
+                              File(Localhelper.getdata(Localhelper.KImage)),
+                            )
+                          : AssetImage(AppImages.emusr) as ImageProvider,
+                    ),
                   ),
                 ],
               ),
