@@ -1,13 +1,17 @@
 import 'package:hive/hive.dart';
+import 'package:tskaty/core/models/task_model.dart';
 
 class Localhelper {
-  static late var userbox;
+  static late Box userbox;
+  static late Box<TaskModel> taskbox;
   static String KName = 'name';
   static String KImage = 'image';
   static String KIsuploaded = 'isuploaded';
 
   static init() async {
+    Hive.registerAdapter<TaskModel>(TaskModelAdapter());
     userbox = await Hive.openBox('userbox');
+    taskbox = await Hive.openBox<TaskModel>("taskbox");
   }
 
   static putdata(String key, dynamic value) {
@@ -16,6 +20,14 @@ class Localhelper {
 
   static getdata(String key) {
     return userbox.get(key);
+  }
+
+  static puttask(String key, TaskModel value) {
+    taskbox.put(key, value);
+  }
+
+  static TaskModel? gettask(String key) {
+    return taskbox.get(key);
   }
 
   static putuserdate(String path, String name) {

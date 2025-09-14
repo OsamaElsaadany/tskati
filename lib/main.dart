@@ -8,6 +8,7 @@ import 'package:tskaty/features/splash/splash.dart';
 Future<void> main() async {
   await Hive.initFlutter();
   await Localhelper.init();
+
   runApp(const MainApp());
 }
 

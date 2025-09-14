@@ -3,10 +3,13 @@ import 'dart:io';
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 import 'package:tskaty/core/constants/app_colors.dart';
 import 'package:tskaty/core/constants/app_images.dart';
+import 'package:tskaty/core/constants/taskcolors.dart';
 import 'package:tskaty/core/functions/navigation.dart';
+import 'package:tskaty/core/models/task_model.dart';
 import 'package:tskaty/core/services/localhelper.dart';
 import 'package:tskaty/core/widgets/btn.dart';
 import 'package:tskaty/features/add_task/pages/add_task.dart';
@@ -132,103 +135,117 @@ class _HomescreenState extends State<Homescreen> {
               ),
               Gap(30),
               Expanded(
-                child: ListView.separated(
-                  itemBuilder: (context, index) {
-                    return Container(
-                      padding: EdgeInsets.all(8),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: AppColors.bluecolor,
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'data',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.whitecolor,
-                                  ),
-                                ),
-                                Gap(10),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.watch_later_outlined,
-                                      color: AppColors.whitecolor,
-                                    ),
-                                    Gap(5),
-                                    Text(
-                                      DateFormat(
-                                        'hh:mm a',
-                                      ).format(DateTime.now()),
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColors.whitecolor,
-                                      ),
-                                    ),
-                                    Gap(10),
-                                    Text(
-                                      DateFormat(
-                                        'hh:mm a',
-                                      ).format(DateTime.now()),
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColors.whitecolor,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Gap(5),
-                                Text(
-                                  'data',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.whitecolor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 50,
-                            child: VerticalDivider(
-                              color: AppColors.whitecolor,
-                              thickness: 1,
-                            ),
-                          ),
-                          RotatedBox(
-                            quarterTurns: 3,
-                            child: Text(
-                              'To Do',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.whitecolor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                child: ValueListenableBuilder(
+                  valueListenable: Localhelper.taskbox.listenable(),
+                  builder: (context, Box, child) {
+                    var tasks = Box.values.toList();
+                    return ListView.separated(
+                      itemBuilder: (context, index) {
+                        return itembuilder(model: tasks[index],);
+                      },
+                      separatorBuilder: (context, index) {
+                        return Gap(7);
+                      },
+                      itemCount: tasks.length,
                     );
                   },
-                  separatorBuilder: (context, index) {
-                    return Gap(7);
-                  },
-                  itemCount: 7,
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class itembuilder extends StatelessWidget {
+  const itembuilder({super.key, required this.model});
+  final TaskModel model;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(8),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: colorl[model.color ?? 0 ],
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  model.title ?? '',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.whitecolor,
+                  ),
+                ),
+                Gap(10),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.watch_later_outlined,
+                      color: AppColors.whitecolor,
+                    ),
+                    Gap(5),
+                    Text(
+                      model.starttime ?? DateFormat('hh:mm a').format(DateTime.now()),
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.whitecolor,
+                      ),
+                    ),
+                    Gap(7),
+                    Text(
+                      model.endtime ?? DateFormat('hh:mm a').format(DateTime.now()),
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.whitecolor,
+                      ),
+                    ),
+                  ],
+                ),
+                Gap(5),
+                Text(
+                  maxLines: 2,
+                  (model.description?.isEmpty == true )
+                  ? 
+                  '----':model.description ?? ''
+                  ,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.whitecolor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 50,
+            child: VerticalDivider(color: AppColors.whitecolor, thickness: 1),
+          ),
+          RotatedBox(
+            quarterTurns: 3,
+            child: Text(
+              model.iscompleted == true ? 'COMPLETED' : 'TODO',
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w400,
+                color: AppColors.whitecolor,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

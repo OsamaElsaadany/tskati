@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:tskaty/core/constants/app_colors.dart';
 import 'package:intl/intl.dart';
+import 'package:tskaty/core/constants/taskcolors.dart';
 import 'package:tskaty/core/functions/navigation.dart';
+import 'package:tskaty/core/models/task_model.dart';
+import 'package:tskaty/core/services/localhelper.dart';
 import 'package:tskaty/core/widgets/btn.dart';
 import 'package:tskaty/features/add_task/widgets/datepick.dart';
 import 'package:tskaty/features/home/pages/homescreen.dart';
@@ -26,11 +29,9 @@ class _AddTaskState extends State<AddTask> {
   var ltcontroller = TextEditingController(
     text: DateFormat('hh:mm a').format(DateTime.now()),
   );
-  List<Color> colorl = [
-    AppColors.bluecolor,
-    AppColors.oracolor,
-    AppColors.redcolor,
-  ];
+
+  var formkey = GlobalKey<FormState>();
+
   int currentindex = 0;
   @override
   Widget build(BuildContext context) {
@@ -54,103 +55,151 @@ class _AddTaskState extends State<AddTask> {
       body: Padding(
         padding: const EdgeInsets.fromLTRB(18, 3, 18, 0),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Title',
-                style: TextStyle(
-                  color: AppColors.darkcolor,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Gap(7),
-              TextFormField(
-                controller: titlecontroller,
-                decoration: InputDecoration(
-                  hint: Text(
-                    'Enter title',
-                    style: TextStyle(color: AppColors.darkcolor, fontSize: 15),
+          child: Form(
+            key: formkey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Title',
+                  style: TextStyle(
+                    color: AppColors.darkcolor,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
-              ),
-              Gap(10),
-              Text(
-                'Describtion',
-                style: TextStyle(
-                  color: AppColors.darkcolor,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Gap(7),
-              TextFormField(
-                controller: desccontroller,
-                maxLines: 4,
-                decoration: InputDecoration(
-                  hint: Text(
-                    'Enter describtion',
-                    style: TextStyle(color: AppColors.darkcolor, fontSize: 15),
-                  ),
-                ),
-              ),
-              Gap(10),
-              datepick(datecontorller: datecontorller),
-
-              Gap(10),
-              Row(
-                children: [
-                  Expanded(
-                    child: timeedit(context, 'Start Time', ftcontroller),
-                  ),
-                  Gap(10),
-                  Expanded(child: timeedit(context, 'End Time', ltcontroller)),
-                ],
-              ),
-              Gap(10),
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Color',
-                    style: TextStyle(
-                      color: AppColors.darkcolor,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w500,
+                Gap(7),
+                TextFormField(
+                  controller: titlecontroller,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter title';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    hint: Text(
+                      'Enter title',
+                      style: TextStyle(
+                        color: AppColors.darkcolor,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
-                  Gap(7),
-                  Row(
-                    spacing: 7,
-                    children: List.generate(3, (index) {
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            currentindex = index;
-                          });
-                        },
-                        child: CircleAvatar(
-                          backgroundColor: colorl[index],
-                          child: currentindex == index
-                              ? Icon(
-                                  Icons.check_outlined,
-                                  color: AppColors.whitecolor,
-                                )
-                              : null,
-                        ),
-                      );
-                    }),
+                ),
+                Gap(10),
+                Text(
+                  'Describtion',
+                  style: TextStyle(
+                    color: AppColors.darkcolor,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w500,
                   ),
-                  Gap(11),
-                  btn(h: 55, title: 'Create task', ontap: () {}),
-                ],
-              ),
-            ],
+                ),
+                Gap(7),
+                TextFormField(
+                  controller: desccontroller,
+                  // validator: (value) {
+                  //   if (value == null || value.isEmpty) {
+                  //     return 'Please enter describtion';
+                  //   }
+                  //   return null;
+                  // },
+                  maxLines: 4,
+                  decoration: InputDecoration(
+                    hint: Text(
+                      'Enter describtion',
+                      style: TextStyle(
+                        color: AppColors.darkcolor,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+                Gap(10),
+                datepick(datecontorller: datecontorller),
+
+                Gap(10),
+                Row(
+                  children: [
+                    Expanded(
+                      child: timeedit(context, 'Start Time', ftcontroller),
+                    ),
+                    Gap(10),
+                    Expanded(
+                      child: timeedit(context, 'End Time', ltcontroller),
+                    ),
+                  ],
+                ),
+                Gap(10),
+                coloredit(context),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  Column coloredit(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Color',
+          style: TextStyle(
+            color: AppColors.darkcolor,
+            fontSize: 17,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        Gap(7),
+        Row(
+          spacing: 7,
+          children: List.generate(3, (index) {
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  currentindex = index;
+                });
+              },
+              child: CircleAvatar(
+                backgroundColor: colorl[index],
+                child: currentindex == index
+                    ? Icon(Icons.check_outlined, color: AppColors.whitecolor)
+                    : null,
+              ),
+            );
+          }),
+        ),
+        Gap(11),
+        btn(
+          h: 55,
+          title: 'Create task',
+          ontap: () async {
+            if (formkey.currentState!.validate()) {
+              String id =
+                  DateTime.now().millisecondsSinceEpoch.toString() +
+                  titlecontroller.text;
+              //save data
+              await Localhelper.puttask(
+                id,
+                TaskModel(
+                  id: id,
+                  title: titlecontroller.text,
+                  description: desccontroller.text,
+                  date: datecontorller.text,
+                  starttime: ftcontroller.text,
+                  endtime: ltcontroller.text,
+                  color: currentindex,
+                  iscompleted: false,
+                ),
+              );
+              pushandrm(context, Homescreen());
+            }
+          },
+        ),
+      ],
     );
   }
 
