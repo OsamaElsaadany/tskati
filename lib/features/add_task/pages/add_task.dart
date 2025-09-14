@@ -99,13 +99,15 @@ class _AddTaskState extends State<AddTask> {
                 Gap(7),
                 TextFormField(
                   controller: desccontroller,
-                  // validator: (value) {
-                  //   if (value == null || value.isEmpty) {
-                  //     return 'Please enter describtion';
-                  //   }
-                  //   return null;
-                  // },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter describtion';
+                    }
+                    return null;
+                  },
                   maxLines: 4,
+                  textInputAction: TextInputAction.done,
+                  
                   decoration: InputDecoration(
                     hint: Text(
                       'Enter describtion',

@@ -23,6 +23,7 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
+  String selecteddate = DateFormat('yyyy-MM-dd').format(DateTime.now());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,10 +126,9 @@ class _HomescreenState extends State<Homescreen> {
                     selectionColor: AppColors.bluecolor,
                     selectedTextColor: Colors.white,
                     onDateChange: (date) {
-                      // New date selected
-                      // setState(() {
-                      //   _selectedValue = date;
-                      // });
+                      setState(() {
+                        selecteddate = DateFormat('yyyy-MM-dd').format(date);
+                      });
                     },
                   ),
                 ],
@@ -137,16 +137,19 @@ class _HomescreenState extends State<Homescreen> {
               Expanded(
                 child: ValueListenableBuilder(
                   valueListenable: Localhelper.taskbox.listenable(),
-                  builder: (context, Box, child) {
-                    var tasks = Box.values.toList();
+                  builder: (context, box, child) {
+                    List<TaskModel> filteredTasks = [];
+                    for (var element in box.values) {
+                      if (element.date == selecteddate)
+                        filteredTasks.add(element);
+                    }
+
                     return ListView.separated(
                       itemBuilder: (context, index) {
-                        return itembuilder(model: tasks[index],);
+                        return itembuilder(model: filteredTasks[index]);
                       },
-                      separatorBuilder: (context, index) {
-                        return Gap(7);
-                      },
-                      itemCount: tasks.length,
+                      separatorBuilder: (context, index) => Gap(7),
+                      itemCount: filteredTasks.length,
                     );
                   },
                 ),
@@ -169,7 +172,7 @@ class itembuilder extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: colorl[model.color ?? 0 ],
+        color: colorl[model.color ?? 0],
       ),
       child: Row(
         children: [
@@ -196,7 +199,8 @@ class itembuilder extends StatelessWidget {
                     ),
                     Gap(5),
                     Text(
-                      model.starttime ?? DateFormat('hh:mm a').format(DateTime.now()),
+                      model.starttime ??
+                          DateFormat('hh:mm a').format(DateTime.now()),
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w400,
@@ -205,7 +209,8 @@ class itembuilder extends StatelessWidget {
                     ),
                     Gap(7),
                     Text(
-                      model.endtime ?? DateFormat('hh:mm a').format(DateTime.now()),
+                      model.endtime ??
+                          DateFormat('hh:mm a').format(DateTime.now()),
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w400,
@@ -217,10 +222,9 @@ class itembuilder extends StatelessWidget {
                 Gap(5),
                 Text(
                   maxLines: 2,
-                  (model.description?.isEmpty == true )
-                  ? 
-                  '----':model.description ?? ''
-                  ,
+                  (model.description?.isEmpty == true)
+                      ? '----'
+                      : model.description ?? '',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
