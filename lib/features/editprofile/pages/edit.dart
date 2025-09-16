@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:tskaty/core/constants/app_colors.dart';
 import 'package:tskaty/core/constants/app_images.dart';
 import 'package:tskaty/core/services/localhelper.dart';
-import 'package:tskaty/core/widgets/btn.dart';
+import 'package:tskaty/core/widgets/mainbutton.dart';
 
 class Edit extends StatefulWidget {
   const Edit({super.key});
@@ -30,7 +30,12 @@ class _EditState extends State<Edit> {
           },
           icon: Icon(Icons.arrow_back, color: AppColors.bluecolor),
         ),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.sunny,color: AppColors.bluecolor,))],
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.sunny, color: AppColors.bluecolor),
+          ),
+        ],
       ),
       body: Center(
         child: Column(
@@ -75,7 +80,7 @@ class _EditState extends State<Edit> {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                btn(
+                                MainButton(
                                   h: 57,
                                   title: 'Upload From Camera',
                                   ontap: () async {
@@ -84,7 +89,7 @@ class _EditState extends State<Edit> {
                                   },
                                 ),
                                 Gap(10),
-                                btn(
+                                MainButton(
                                   h: 57,
                                   title: 'Upload From Gallery',
                                   ontap: () async {
@@ -154,7 +159,7 @@ class _EditState extends State<Edit> {
                                       ),
                                     ),
                                     Gap(20),
-                                    btn(
+                                    MainButton(
                                       h: 57,
                                       title: 'Update Your Name',
                                       ontap: () {

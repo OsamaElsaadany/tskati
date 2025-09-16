@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:tskaty/core/constants/app_colors.dart';
 
-class btn extends StatelessWidget {
-  const btn({super.key, required this.h, required this.title, required this.ontap});
+class MainButton extends StatelessWidget {
+  const MainButton({
+    super.key,
+    required this.h,
+    required this.title,
+    required this.ontap,
+  });
 
   final double h;
   final String title;

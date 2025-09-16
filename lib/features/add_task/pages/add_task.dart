@@ -6,8 +6,8 @@ import 'package:tskaty/core/constants/taskcolors.dart';
 import 'package:tskaty/core/functions/navigation.dart';
 import 'package:tskaty/core/models/task_model.dart';
 import 'package:tskaty/core/services/localhelper.dart';
-import 'package:tskaty/core/widgets/btn.dart';
-import 'package:tskaty/features/add_task/widgets/datepick.dart';
+import 'package:tskaty/core/widgets/mainbutton.dart';
+import 'package:tskaty/features/add_task/widgets/datepicker.dart';
 import 'package:tskaty/features/home/pages/homescreen.dart';
 
 class AddTask extends StatefulWidget {
@@ -107,7 +107,7 @@ class _AddTaskState extends State<AddTask> {
                   },
                   maxLines: 4,
                   textInputAction: TextInputAction.done,
-                  
+
                   decoration: InputDecoration(
                     hint: Text(
                       'Enter describtion',
@@ -175,7 +175,7 @@ class _AddTaskState extends State<AddTask> {
           }),
         ),
         Gap(11),
-        btn(
+        MainButton(
           h: 55,
           title: 'Create task',
           ontap: () async {

@@ -11,7 +11,7 @@ import 'package:tskaty/core/constants/taskcolors.dart';
 import 'package:tskaty/core/functions/navigation.dart';
 import 'package:tskaty/core/models/task_model.dart';
 import 'package:tskaty/core/services/localhelper.dart';
-import 'package:tskaty/core/widgets/btn.dart';
+import 'package:tskaty/core/widgets/mainbutton.dart';
 import 'package:tskaty/features/add_task/pages/add_task.dart';
 import 'package:tskaty/features/editprofile/pages/edit.dart';
 
@@ -104,7 +104,7 @@ class _HomescreenState extends State<Homescreen> {
                   ),
                   SizedBox(
                     width: 150,
-                    child: btn(
+                    child: MainButton(
                       h: 45,
                       title: '+ Add Task',
                       ontap: () {

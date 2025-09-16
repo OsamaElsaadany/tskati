@@ -6,7 +6,7 @@ import 'package:tskaty/core/constants/app_images.dart';
 import 'package:tskaty/core/functions/navigation.dart';
 import 'package:tskaty/core/services/localhelper.dart';
 import 'package:tskaty/features/home/pages/homescreen.dart';
-import 'package:tskaty/features/upload/upload.dart';
+import 'package:tskaty/features/uploadScreen/uploadScreen.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});

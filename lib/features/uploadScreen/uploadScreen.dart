@@ -8,7 +8,7 @@ import 'package:tskaty/core/constants/app_images.dart';
 import 'package:tskaty/core/functions/navigation.dart';
 import 'package:tskaty/core/functions/snackbar.dart';
 import 'package:tskaty/core/services/localhelper.dart';
-import 'package:tskaty/core/widgets/btn.dart';
+import 'package:tskaty/core/widgets/mainbutton.dart';
 import 'package:tskaty/features/home/pages/homescreen.dart';
 
 class Upload extends StatefulWidget {
@@ -72,7 +72,7 @@ class _UploadState extends State<Upload> {
                   width: 280,
                   child: Column(
                     children: [
-                      btn(
+                      MainButton(
                         h: 57,
                         title: 'Upload From Camera',
                         ontap: () async {
@@ -80,7 +80,7 @@ class _UploadState extends State<Upload> {
                         },
                       ),
                       Gap(10),
-                      btn(
+                      MainButton(
                         h: 57,
                         title: 'Upload From Gallery',
                         ontap: () async {
