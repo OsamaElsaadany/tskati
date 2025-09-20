@@ -64,6 +64,7 @@ Caching = saving data locally on device to improve performance and reduce batter
 
 ## 📂 Project Structure  
 
+```
 project_root/
 ├── assets/
 │   ├── fonts/
@@ -123,3 +124,5 @@ project_root/
 │   └── main.dart
 │
 └── pubspec.yaml
+```
+
