@@ -63,54 +63,63 @@ Caching = saving data locally on device to improve performance and reduce batter
 ---
 
 ## 📂 Project Structure  
-assets/ # Static files (images, fonts, icons)
-│── fonts/ # Custom fonts
-│── icons/ # App icons (currently empty)
-│── images/
-│ ├── output/ # App screenshots for README
-│ ├── *.json # Lottie animation files
 
-lib/
-│── core/ # Core app utilities
-│ ├── constants/ # Global constants
-│ │ ├── app_colors.dart
-│ │ ├── app_fonts.dart
-│ │ ├── app_images.dart
-│ │ └── taskcolors.dart
-│ ├── functions/ # Common reusable functions
-│ │ ├── navigation.dart
-│ │ └── snackbar.dart
-│ ├── models/ # Data models
-│ │ ├── task_model.dart
-│ │ └── task_model.g.dart
-│ ├── services/ # Local database / services
-│ │ └── localhelper.dart
-│ ├── utils/ # App utilities (themes, etc.)
-│ │ └── theme.dart
-│ └── widgets/ # Reusable custom widgets
-│ └── mainbutton.dart
+project_root/
+├── assets/
+│   ├── fonts/
+│   ├── icons/
+│   └── images/
+│       ├── output/
+│       └── (lottie json files...)
 │
-│── features/ # App features (modules/screens)
-│ ├── home/ # 🏠 Home screen (task list, dashboard)
-│ │ ├── pages/
-│ │ │ └── homescreen.dart
-│ │ └── widgets/ # (empty for now)
-│ │
-│ ├── editprofile/ # 👤 Edit profile (user info, settings)
-│ │ ├── pages/
-│ │ │ └── edit.dart
-│ │ └── widgets/ # (empty for now)
-│ │
-│ ├── add_task/ # ➕ Add task (form & date picker)
-│ │ ├── pages/
-│ │ │ └── add_task.dart
-│ │ └── widgets/
-│ │ └── datepicker.dart
-│ │
-│ ├── splash/ # 🚀 Splash screen (app intro)
-│ │ └── splash.dart
-│ │
-│ └── uploadScreen/ # 📤 Upload screen (user image, files)
-│ └── uploadscreen.dart
+├── lib/
+│   ├── core/
+│   │   ├── constants/
+│   │   │   ├── app_colors.dart
+│   │   │   ├── app_fonts.dart
+│   │   │   ├── app_images.dart
+│   │   │   └── taskcolors.dart
+│   │   │
+│   │   ├── functions/
+│   │   │   ├── navigation.dart
+│   │   │   └── snackbar.dart
+│   │   │
+│   │   ├── models/
+│   │   │   ├── task_model.dart
+│   │   │   └── task_model.g.dart
+│   │   │
+│   │   ├── services/
+│   │   │   └── localhelper.dart
+│   │   │
+│   │   ├── utils/
+│   │   │   └── theme.dart
+│   │   │
+│   │   └── widgets/
+│   │       └── mainbutton.dart
+│   │
+│   ├── features/
+│   │   ├── home/
+│   │   │   ├── pages/
+│   │   │   │   └── homescreen.dart
+│   │   │   └── widgets/
+│   │   │
+│   │   ├── editprofile/
+│   │   │   ├── pages/
+│   │   │   │   └── edit.dart
+│   │   │   └── widgets/
+│   │   │
+│   │   ├── add_task/
+│   │   │   ├── pages/
+│   │   │   │   └── add_task.dart
+│   │   │   └── widgets/
+│   │   │       └── datepicker.dart
+│   │   │
+│   │   ├── splash/
+│   │   │   └── splash.dart
+│   │   │
+│   │   └── uploadScreen/
+│   │       └── uploadscreen.dart
+│   │
+│   └── main.dart
 │
-└── main.dart # App entry point
+└── pubspec.yaml
