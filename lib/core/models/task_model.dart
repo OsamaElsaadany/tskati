@@ -1,8 +1,6 @@
-
 import 'package:hive/hive.dart';
 
 part 'task_model.g.dart';
-
 
 @HiveType(typeId: 0)
 class TaskModel {
@@ -32,4 +30,25 @@ class TaskModel {
     this.id,
     this.iscompleted,
   });
+
+  TaskModel copyWith({
+    String? title,
+    String? description,
+    String? date,
+    String? starttime,
+    String? endtime,
+    int? color,
+    bool? iscompleted,
+  }) {
+    return TaskModel(
+      id: id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      date: date ?? this.date,
+      starttime: starttime ?? this.starttime,
+      endtime: endtime ?? this.endtime,
+      color: color ?? this.color,
+      iscompleted: iscompleted ?? this.iscompleted,
+    );
+  }
 }

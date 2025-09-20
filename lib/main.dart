@@ -3,6 +3,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:tskaty/core/constants/app_colors.dart';
 import 'package:tskaty/core/constants/app_fonts.dart';
 import 'package:tskaty/core/services/localhelper.dart';
+import 'package:tskaty/core/utils/theme.dart';
 import 'package:tskaty/features/splash/splash.dart';
 
 Future<void> main() async {
@@ -17,28 +18,18 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: AppColors.whitecolor,
-        appBarTheme: AppBarTheme(
-          backgroundColor: AppColors.whitecolor,
-          centerTitle: true,
-          surfaceTintColor: Colors.transparent,
-        ),
-        fontFamily: AppFonts.poppinsfamily,
-        inputDecorationTheme: InputDecorationTheme(
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: AppColors.graycolor),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: AppColors.bluecolor),
-          ),
-        ),
-      ),
-      home: Splash(),
+    return ValueListenableBuilder(
+      valueListenable: Localhelper.userbox.listenable(),
+      builder: (context, Box, child) {
+        bool isdark = Box.get(Localhelper.KIsdark) ?? false;
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          themeMode: isdark ? ThemeMode.dark : ThemeMode.light,
+          darkTheme: apptheme.darktheme,
+          theme: apptheme.lighttheme,
+          home: Splash(),
+        );
+      },
     );
   }
 }

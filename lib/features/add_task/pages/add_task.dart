@@ -62,11 +62,7 @@ class _AddTaskState extends State<AddTask> {
               children: [
                 Text(
                   'Title',
-                  style: TextStyle(
-                    color: AppColors.darkcolor,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                 ),
                 Gap(7),
                 TextFormField(
@@ -78,23 +74,13 @@ class _AddTaskState extends State<AddTask> {
                     return null;
                   },
                   decoration: InputDecoration(
-                    hint: Text(
-                      'Enter title',
-                      style: TextStyle(
-                        color: AppColors.darkcolor,
-                        fontSize: 15,
-                      ),
-                    ),
+                    hint: Text('Enter title', style: TextStyle(fontSize: 15)),
                   ),
                 ),
                 Gap(10),
                 Text(
                   'Describtion',
-                  style: TextStyle(
-                    color: AppColors.darkcolor,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                 ),
                 Gap(7),
                 TextFormField(
@@ -111,10 +97,7 @@ class _AddTaskState extends State<AddTask> {
                   decoration: InputDecoration(
                     hint: Text(
                       'Enter describtion',
-                      style: TextStyle(
-                        color: AppColors.darkcolor,
-                        fontSize: 15,
-                      ),
+                      style: TextStyle(fontSize: 15),
                     ),
                   ),
                 ),
@@ -149,11 +132,7 @@ class _AddTaskState extends State<AddTask> {
       children: [
         Text(
           'Color',
-          style: TextStyle(
-            color: AppColors.darkcolor,
-            fontSize: 17,
-            fontWeight: FontWeight.w500,
-          ),
+          style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
         ),
         Gap(7),
         Row(
@@ -215,11 +194,7 @@ class _AddTaskState extends State<AddTask> {
       children: [
         Text(
           title,
-          style: TextStyle(
-            color: AppColors.darkcolor,
-            fontSize: 17,
-            fontWeight: FontWeight.w500,
-          ),
+          style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
         ),
         Gap(7),
         TextFormField(

@@ -7,6 +7,7 @@ class Localhelper {
   static String KName = 'name';
   static String KImage = 'image';
   static String KIsuploaded = 'isuploaded';
+  static String KIsdark = 'isdark';
 
   static init() async {
     Hive.registerAdapter<TaskModel>(TaskModelAdapter());
@@ -28,6 +29,11 @@ class Localhelper {
 
   static TaskModel? gettask(String key) {
     return taskbox.get(key);
+  }
+
+  static changetheme() {
+    bool cashedtheme = userbox.get(KIsdark) ?? false;
+    userbox.put(KIsdark, !cashedtheme);
   }
 
   static putuserdate(String path, String name) {

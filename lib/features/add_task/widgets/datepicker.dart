@@ -16,7 +16,6 @@ class datepick extends StatelessWidget {
         Text(
           'Date',
           style: TextStyle(
-            color: AppColors.darkcolor,
             fontSize: 17,
             fontWeight: FontWeight.w500,
           ),

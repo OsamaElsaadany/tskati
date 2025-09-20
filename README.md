@@ -8,6 +8,10 @@ A new Flutter project.
 ![updt](https://github.com/OsamaElsaadany/tskati/blob/main/assets/images/output/updt.png)
 ![userupload](https://github.com/OsamaElsaadany/tskati/blob/main/assets/images/output/userupload.jpg)
 ![home.png](https://github.com/OsamaElsaadany/tskati/blob/main/assets/images/output/home.png)
+![darkeditprofile.png](https://github.com/OsamaElsaadany/tskati/blob/main/assets/images/output/darkeditprofile.png)
+![darkaddtask.png](https://github.com/OsamaElsaadany/tskati/blob/main/assets/images/output/darkaddtask.png)
+![darkemptyhome.png](https://github.com/OsamaElsaadany/tskati/blob/main/assets/images/output/darkemptyhome.png)
+![darkhome.png](https://github.com/OsamaElsaadany/tskati/blob/main/assets/images/output/darkhome.png)
 
 cashing in flutter means that saving the data locally in the device instead of downloading it using internet so it is save battery and make the app more fast.
 
