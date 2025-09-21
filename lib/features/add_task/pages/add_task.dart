@@ -11,7 +11,8 @@ import 'package:tskaty/features/add_task/widgets/datepicker.dart';
 import 'package:tskaty/features/home/pages/homescreen.dart';
 
 class AddTask extends StatefulWidget {
-  const AddTask({super.key});
+  const AddTask({super.key, this.model});
+  final TaskModel? model;
 
   @override
   State<AddTask> createState() => _AddTaskState();
@@ -30,6 +31,19 @@ class _AddTaskState extends State<AddTask> {
     text: DateFormat('hh:mm a').format(DateTime.now()),
   );
 
+  void initState() {
+    titlecontroller.text = widget.model?.title ?? '';
+    desccontroller.text = widget.model?.description ?? '';
+    datecontorller.text =
+        widget.model?.date ?? DateFormat('yyyy-MM-dd').format(DateTime.now());
+    ftcontroller.text =
+        widget.model?.starttime ?? DateFormat('hh:mm a').format(DateTime.now());
+    ltcontroller.text =
+        widget.model?.endtime ?? DateFormat('hh:mm a').format(DateTime.now());
+    currentindex = widget.model?.color ?? 0;
+    super.initState();
+  }
+
   var formkey = GlobalKey<FormState>();
 
   int currentindex = 0;
@@ -43,14 +57,23 @@ class _AddTaskState extends State<AddTask> {
           },
           icon: Icon(Icons.arrow_back_rounded, color: AppColors.bluecolor),
         ),
-        title: Text(
-          'Add Task',
-          style: TextStyle(
-            color: AppColors.bluecolor,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        title: widget.model != null
+            ? Text(
+                'Edit Task',
+                style: TextStyle(
+                  color: AppColors.bluecolor,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              )
+            : Text(
+                'Add Task',
+                style: TextStyle(
+                  color: AppColors.bluecolor,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(18, 3, 18, 0),
@@ -156,12 +179,13 @@ class _AddTaskState extends State<AddTask> {
         Gap(11),
         MainButton(
           h: 55,
-          title: 'Create task',
+          title: widget.model != null ? 'Update task' : 'Create task',
           ontap: () async {
             if (formkey.currentState!.validate()) {
-              String id =
-                  DateTime.now().millisecondsSinceEpoch.toString() +
-                  titlecontroller.text;
+              String id = widget.model != null
+                  ? widget.model?.id ?? ''
+                  : DateTime.now().millisecondsSinceEpoch.toString() +
+                        titlecontroller.text;
               //save data
               await Localhelper.puttask(
                 id,

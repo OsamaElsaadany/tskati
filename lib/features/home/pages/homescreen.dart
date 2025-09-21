@@ -232,90 +232,93 @@ class itembuilder extends StatelessWidget {
       background: _buildComplete(),
       secondaryBackground: _buildDelete(),
       key: UniqueKey(),
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 5),
-        padding: EdgeInsets.all(8),
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: colorl[model.color ?? 0],
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    model.title ?? '',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.whitecolor,
-                    ),
-                  ),
-                  Gap(10),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.watch_later_outlined,
+      child: GestureDetector(
+        onTap: () => pushto(context, AddTask(model:model ,)),
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 5),
+          padding: EdgeInsets.all(8),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: colorl[model.color ?? 0],
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      model.title ?? '',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
                         color: AppColors.whitecolor,
                       ),
-                      Gap(5),
-                      Text(
-                        model.starttime ??
-                            DateFormat('hh:mm a').format(DateTime.now()),
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.whitecolor,
-                        ),
-                      ),
-                      Gap(7),
-                      Text(
-                        model.endtime ??
-                            DateFormat('hh:mm a').format(DateTime.now()),
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.whitecolor,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Gap(5),
-                  Text(
-                    maxLines: 2,
-                    (model.description?.isEmpty == true)
-                        ? '----'
-                        : model.description ?? '',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.whitecolor,
                     ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 50,
-              child: VerticalDivider(color: AppColors.whitecolor, thickness: 1),
-            ),
-            RotatedBox(
-              quarterTurns: 3,
-              child: Text(
-                model.iscompleted == true ? 'COMPLETED' : 'TODO',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.whitecolor,
+                    Gap(10),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.watch_later_outlined,
+                          color: AppColors.whitecolor,
+                        ),
+                        Gap(5),
+                        Text(
+                          model.starttime ??
+                              DateFormat('hh:mm a').format(DateTime.now()),
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.whitecolor,
+                          ),
+                        ),
+                        Gap(7),
+                        Text(
+                          model.endtime ??
+                              DateFormat('hh:mm a').format(DateTime.now()),
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.whitecolor,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Gap(5),
+                    Text(
+                      maxLines: 2,
+                      (model.description?.isEmpty == true)
+                          ? '----'
+                          : model.description ?? '',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.whitecolor,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
+              SizedBox(
+                height: 50,
+                child: VerticalDivider(color: AppColors.whitecolor, thickness: 1),
+              ),
+              RotatedBox(
+                quarterTurns: 3,
+                child: Text(
+                  model.iscompleted == true ? 'COMPLETED' : 'TODO',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.whitecolor,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
